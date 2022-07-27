@@ -1,0 +1,175 @@
+package work;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import jiyeon.Employee;
+
+public class BookManagerImpl {
+	
+/*	private final int MAX_SIZE = 100;	
+	private int size = 0;
+
+	private Book[] books = new Book[MAX_SIZE];*/
+	
+	List<Book> list = new ArrayList<>();
+	
+	private static BookManagerImpl bm = new BookManagerImpl();
+	
+	private BookManagerImpl() {}
+	
+	public static BookManagerImpl getInstance() {
+		return bm;
+	}
+
+	//add 기능
+	public void add(Book b){
+		//책 추가
+		list.add(b);
+	}
+	
+	//remove 기능
+	public void remove(String isbn) {
+		//일치하는 고유번호 탐색
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getIsbn().equals(isbn)) {
+				list.remove(i);
+				return;
+			}
+		}
+		
+	}
+	
+	//getList 전체 책 정보 반환
+	public Book[] getList() {
+		// 빈 Book 배열 만들기
+		Book[] newArr = new Book[list.size()];
+
+		// 해당 리스트의 요소들을 newArr에 담기
+		list.toArray(newArr); 
+
+		return newArr;
+	}
+	
+	//searchByIsbn 특정 책 조회
+	public Book searchByIsbn(String isbn) {
+		for(Book b : list) {
+			if(b.getIsbn().equals(isbn)) {
+				return b;
+			}
+		}
+		//일치하는 책이 없는 경우
+		return null;
+	}
+	
+	//searchByTitle 특정 책 조회
+	public Book[] searchByTitle(String title) {
+
+		int cnt = 0;
+
+		for (Book b : list) {
+			// 주어진 이름을 포함하는 사용자인지 검사
+			if (b.getTitle().contains(title)) {
+				cnt++;
+			}
+		}
+
+		if (cnt == 0)
+			return null;
+
+		Book[] res = new Book[cnt];
+
+		for (Book b : list) {
+			// 주어진 이름을 포함하는 사용자인지 검사
+			if (b.getTitle().contains(title)) {
+				list.toArray(res);
+			}
+		}
+
+		return res;
+	}
+
+	
+	//getBook 전체 일반 도서 정보 반환
+	public Book[] getBook() {
+		//관리하고 있는 책만큼
+		int cnt = 0;
+		
+		for(Book b : list) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(!(b instanceof Magazine)) {
+				cnt++;
+			}
+		}
+		
+		if (cnt == 0)
+			return null;
+		
+		Book[] res = new Book[cnt];
+		
+		for(Book b : list) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(!(b instanceof Magazine)) {
+				list.toArray(res);
+			}
+		}
+		
+		return res;
+
+	}
+	//getMagazine 전체 잡지 정보 반환
+	public Book[] getMagazines() {
+		//관리하고 있는 잡지만큼
+		int cnt = 0;
+		
+		for(Book b : list) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(b instanceof Magazine) {
+				cnt++;
+			}
+		}
+		
+		if (cnt == 0)
+			return null;
+		
+		Book[] res = new Magazine[cnt];
+		
+		for(Book b : list) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(b instanceof Magazine) {
+				list.toArray(res);
+			}
+		}
+		
+		return res;
+
+	}
+	
+	public int getTotalPrice() {
+		
+		int sum = 0;
+		
+		for(Book b : list) {
+			sum += b.getPrice();
+		}
+		
+		return sum;
+		
+	}
+	
+	public double getPriceAvg() {
+		
+		int sum = 0;
+		
+		for(Book b : list) {
+			sum += b.getPrice();
+		}
+		
+		return sum/list.size();
+		
+	}
+
+
+	
+}

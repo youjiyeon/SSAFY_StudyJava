@@ -1,0 +1,59 @@
+package com.ssafy.stream;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamTest01 {
+
+	public static void main(String[] args) {
+		
+		
+		List<Member> list = Arrays.asList(
+				new Member("유지연1", "261"),
+				new Member("유지연2", "262"),
+				new Member("유지연3", "263"),
+				new Member("유지연4", "264"),
+				new Member("유지연5", "265"),
+				new Member("유지연6", "266")
+				);
+		System.out.println(list);
+		
+		//list자료 중 이름만 출력
+		list.stream()
+		.map(member -> member.getName()) //return 생략
+		.forEach(member -> System.out.println(member));
+		
+		
+		System.out.println("이름에 1이 포함됨 사람");
+		list.stream()
+		.map(member -> member.getName()) //return 생략
+		.filter(name->name.contains("1"))
+		.forEach(member -> System.out.println(member));
+		
+		
+		System.out.println("나이의 오름차순 정렬");
+		list.stream()
+		.map(member -> member.getAge()) //return 생략
+		.filter(name->name.contains("1"))
+		.forEach(member -> System.out.println(member));
+		//중간 처리 메서드
+		//필터링
+		
+		//매핑
+		
+		//정렬
+		
+		//중복 제거
+
+		//루핑
+		
+		
+		//최종 처리 메서드
+		//값의 존재 여부 체크
+		
+		//집계
+		
+		//반복(루핑)
+	}
+
+}

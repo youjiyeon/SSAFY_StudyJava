@@ -1,0 +1,11 @@
+package jiyeon;
+
+public class CompanyMap {
+
+	//관리할 사원 목록
+	Map< String, Employee >
+	
+	//사원 추가(Create)
+	//사원 조회(Read)
+	
+}

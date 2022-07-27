@@ -1,0 +1,5 @@
+package jiyeon;
+
+public interface IBookManager {
+	
+}

@@ -1,0 +1,29 @@
+package com.ssafy.stream;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class StreamTest02 {
+
+	public static void main(String[] args) {
+		
+		String[][] str = {{"a","b","f"},{"a","e","f"}};
+		
+		//2차원 배열을 1차원 배열로
+		Stream<String[]> stream = Arrays.stream(str);
+		
+		List<String> list = stream
+		.flatMap( arr-> Arrays.stream(arr) )
+		.distinct()
+		.collect(Collectors.toList());
+		
+		System.out.println(list);
+		//출력
+		//.forEach(System.out::println);
+
+	}
+
+}

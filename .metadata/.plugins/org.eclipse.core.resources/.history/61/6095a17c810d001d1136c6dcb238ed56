@@ -1,0 +1,20 @@
+package com.ssafy.stream;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+public class StreamTest02 {
+
+	public static void main(String[] args) {
+		
+		String[][] str = {{"a","b","c"},{"d","e","f"}};
+		
+		//2차원 배열을 1차원 배열로
+		Stream<String[]> stream = Arrays.stream(str);
+		
+		stream.flatMap( arr-> Arrays.stream(arr) )
+		.forEach(System.out::println);
+
+	}
+
+}

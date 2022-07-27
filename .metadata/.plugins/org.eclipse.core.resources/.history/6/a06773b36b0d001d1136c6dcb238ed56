@@ -1,0 +1,193 @@
+package work;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import jiyeon.Employee;
+
+public class BookManagerImpl implements IBookManager{
+	
+/*	private final int MAX_SIZE = 100;	
+	private int size = 0;
+
+	private Book[] books = new Book[MAX_SIZE];*/
+	
+	List<Book> books = new ArrayList<>();
+	
+	private static BookManagerImpl bm = new BookManagerImpl();
+	
+	private BookManagerImpl() {}
+	
+	public static BookManagerImpl getInstance() {
+		return bm;
+	}
+
+	//add 기능
+	public void add(Book book){
+		//책 추가
+		books.add(book);
+	}
+	
+	//remove 기능
+	public void remove(String isbn) {
+		//일치하는 고유번호 탐색
+		for(int i=0; i<books.size(); i++) {
+			if(books.get(i).getIsbn().equals(isbn)) {
+				books.remove(i);
+				return;
+			}
+		}
+		
+	}
+	
+	//getList 전체 책 정보 반환
+	public Book[] getList() {
+		// 빈 Book 배열 만들기
+		Book[] newArr = new Book[books.size()];
+
+		// 해당 리스트의 요소들을 newArr에 담기
+		books.toArray(newArr); 
+
+		return newArr;
+	}
+	
+	//searchByIsbn 특정 책 조회
+	public Book searchByIsbn(String isbn) {
+		for(Book b : books) {
+			if(b.getIsbn().equals(isbn)) {
+				return b;
+			}
+		}
+		//일치하는 책이 없는 경우
+		return null;
+	}
+	
+	//searchByTitle 특정 책 조회
+	public Book[] searchByTitle(String title) {
+
+		List<Book> li = new ArrayList<>();
+		
+		for (Book b : books) {
+			// 주어진 이름을 포함하는 사용자인지 검사
+			if (b.getTitle().contains(title)) {
+				li.add(b);
+			}
+		}
+
+		Book[] res = new Book[li.size()];
+		li.toArray(res);
+
+		
+		return res;
+	}
+
+	
+	//getBook 전체 일반 도서 정보 반환
+	public Book[] getBooks() {
+		//관리하고 있는 책만큼
+		
+		List<Book> li = new ArrayList<>();
+		for(Book b : books) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(!(b instanceof Magazine)) {
+				li.add(b);
+			}
+		}
+		
+		Book[] res = new Book[li.size()];
+		li.toArray(res);
+
+		
+		return res;
+
+	}
+	//getMagazine 전체 잡지 정보 반환
+	public Magazine[] getMagazines() {
+		//관리하고 있는 잡지만큼
+
+		List<Book> li = new ArrayList<>();
+		
+		for(Book b : books) {
+			// 리스트안의 객체가 Magazine 클래스의 인스턴스인지 검사
+			if(b instanceof Magazine) {
+				li.add((Magazine)b);
+			}
+		}
+		
+		Magazine[] res = new Magazine[li.size()];
+		li.toArray(res);
+
+		
+		return res;
+
+	}
+	
+	public int getTotalPrice() {
+		
+		int sum = 0;
+		
+		for(Book b : books) {
+			sum += b.getPrice();
+		}
+		
+		return sum;
+		
+	}
+	
+	public double getPriceAvg() {
+		
+		int sum = 0;
+		
+		for(Book b : books) {
+			sum += b.getPrice();
+		}
+		
+		return sum/books.size();
+		
+	}
+
+	@Override
+	public void sell(String isbn, int quantity) throws QuantityException, ISBNNotFoundException{
+		
+/*		for(Book b : books) {
+			if(b.getIsbn().equals(isbn)) {
+				if(b.getQuantity() - quantity >= 0) {
+					b.setQuantity(b.getQuantity() - quantity);
+					return;
+				}else {
+					throw new QuantityException();
+				}
+			}
+		}
+		throw new ISBNNotFoundException(isbn);*/
+		
+		
+		//교수님 코드
+		Book book = searchByIsbn(isbn);
+		if(book == null) throw new ISBNNotFoundException(isbn);
+		if(book.getQuantity() - quantity < 0) throw new QuantityException();
+		book.setQuantity(book.getQuantity() - quantity);
+		
+	}
+
+	@Override
+	public void buy(String isbn, int quantity) throws ISBNNotFoundException{
+		
+	    Book book = searchByIsbn(isbn);
+	    
+	    if(book != null) {
+	    	book.setQuantity(book.getQuantity() + quantity);
+	    	return;
+	    }
+	    throw new ISBNNotFoundException(isbn);
+	    
+	    //교수님 코드
+/*	    if(book == null) throw new ISBNNotFoundException(isbn);
+	    book.setQuantity(book.getQuantity() + quantity);*/
+	    
+	}
+
+
+	
+}

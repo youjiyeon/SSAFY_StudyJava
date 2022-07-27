@@ -1,0 +1,26 @@
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class CompanyMap {
+
+	//관리할 사원 목록
+	Map< String, Employee > map = new HashMap<>();
+	
+	//사원 추가(Create)
+	public void insert(Employee e) {
+		map.put(e.getEn(),e);
+	}
+	
+	//사원 조회(Read)
+	//
+	public Employee[] getAllEmployees() {
+		Employee[] newArr = new Employee[map.size()];
+		
+		map.values().toArray(newArr);
+		
+		return newArr;
+	}
+	
+}

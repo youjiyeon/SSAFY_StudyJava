@@ -1,0 +1,21 @@
+package com.ssafy.lambda;
+
+public class LambdaTest {
+
+	public static void main(String[] args) {
+		
+		//익명 구현 객체
+		//익명으로 한번 쓸 수 있는 객체
+		SimpleInterface s = new SimpleInterface() {
+			
+			@Override
+			public void simple() {
+				System.out.println("simple() 실행");
+				
+			}
+		};
+		
+		s.simple();
+	}
+
+}

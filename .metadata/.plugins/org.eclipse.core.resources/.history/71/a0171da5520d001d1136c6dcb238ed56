@@ -1,0 +1,53 @@
+package work;
+
+public class BookTest {
+
+	public static void main(String[] args) {
+		
+		Book b1 = new Book("1","해리포터1","J.K롤링1","SsafyBook1","마법사의 돌",10001);
+		Book b2 = new Book("2","해리포터2","J.K롤링2","SsafyBook2","비밀의 방",10002);
+		Book b3 = new Book("3","해리포터3","J.K롤링3","SsafyBook3","아즈카반의 죄수",10003);
+		Magazine m = new Magazine("4","해리포터4","J.K롤링4","SsafyBook4","불의 잔",10004,2022,07);
+		BookManagerImpl bm = BookManagerImpl.getInstance();
+		BookManagerImpl bm1 = BookManagerImpl.getInstance();
+		
+		System.out.println("===================================add후 전체 첵 조회=============================================");
+		//add
+		bm.add(b1);
+		bm.add(b2);
+		bm.add(b3);
+		bm.add(m);
+		
+		//전체 책 조회
+		Book[] bk = bm.getList();
+		for(Book b: bk)
+			System.out.println(b.toString());
+		System.out.println("=============================================================================================");
+		
+		System.out.println("==========================================일반 도서 조회==========================================");
+		Book[] bk1 = bm.getBook();
+		for(Book b:bk1)
+			System.out.println(b);
+		System.out.println("=============================================================================================");
+		
+		System.out.println("==========================================잡지 목록 조회==========================================");
+		Book[] bk2 = bm.getMagazines();
+		for(Book b:bk2)
+			System.out.println(b);
+		System.out.println("=============================================================================================");
+		
+		System.out.println("===================================특정 책 조회(title: \"2\")======================================");
+		Book[] bk3 = bm.searchByTitle("2");
+		for(Book b:bk3)
+			System.out.println(b);
+		System.out.println("=============================================================================================");
+		
+		System.out.println("도서 가격 총합: "+bm.getTotalPrice());
+		System.out.println("도서 가격 평균: "+bm.getPriceAvg());
+
+		//같은 인스턴트를 참조하는 지 검사
+		System.out.println(bm.equals(bm1));
+	}
+
+}
+
